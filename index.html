@@ -1,601 +1,518 @@
-import { useState } from "react";
-import { 
-  Plane, 
-  Hotel, 
-  Car, 
-  MapPin, 
-  Calendar, 
-  Star, 
-  Search, 
-  Users, 
-  PlaneTakeoff, 
-  PlaneLanding,
-  Clock,
-  Shield,
-  Wallet,
-  MessageCircle
-} from "lucide-react";
-
-const App = () => {
-  const [activeTab, setActiveTab] = useState('flights');
-  const [searchQuery, setSearchQuery] = useState({
-    destination: '',
-    checkIn: '',
-    checkOut: '',
-    passengers: 1
-  });
-
-  const popularDestinations = [
-    { name: "París", country: "Francia", price: "Desde $899", image: "https://placehold.co/400x300/4f46e5/ffffff?text=París" },
-    { name: "Roma", country: "Italia", price: "Desde $749", image: "https://placehold.co/400x300/dc2626/ffffff?text=Roma" },
-    { name: "Nueva York", country: "EE.UU.", price: "Desde $699", image: "https://placehold.co/400x300/059669/ffffff?text=Nueva+York" },
-    { name: "Tokio", country: "Japón", price: "Desde $1199", image: "https://placehold.co/400x300/7c3aed/ffffff?text=Tokio" },
-    { name: "Barcelona", country: "España", price: "Desde $599", image: "https://placehold.co/400x300/ea580c/ffffff?text=Barcelona" },
-    { name: "Sídney", country: "Australia", price: "Desde $1499", image: "https://placehold.co/400x300/0891b2/ffffff?text=Sídney" }
-  ];
-
-  const featuredPackages = [
-    {
-      title: "Escapada Romántica a París",
-      duration: "7 días / 6 noches",
-      price: "$1,299",
-      originalPrice: "$1,599",
-      rating: 4.8,
-      image: "https://placehold.co/600x400/4f46e5/ffffff?text=París+Romántico"
-    },
-    {
-      title: "Aventura en las Islas Maldivas",
-      duration: "10 días / 9 noches",
-      price: "$2,499",
-      originalPrice: "$2,999",
-      rating: 4.9,
-      image: "https://placehold.co/600x400/0891b2/ffffff?text=Maldivas"
-    },
-    {
-      title: "Descubriendo la Cultura Japonesa",
-      duration: "12 días / 11 noches",
-      price: "$3,199",
-      originalPrice: "$3,799",
-      rating: 4.7,
-      image: "https://placehold.co/600x400/7c3aed/ffffff?text=Japón"
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ViajaMundo | Agencia de Viajes Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-  ];
 
-  const testimonials = [
-    {
-      name: "María González",
-      location: "Madrid, España",
-      comment: "La mejor experiencia de viaje de mi vida. Todo fue perfecto desde el primer momento hasta el regreso. Altamente recomendado!",
-      rating: 5
-    },
-    {
-      name: "Carlos Rodríguez",
-      location: "Buenos Aires, Argentina",
-      comment: "Increíble atención al cliente y precios muy competitivos. Nuestra familia disfrutó cada momento del viaje a Italia.",
-      rating: 5
-    },
-    {
-      name: "Ana Martínez",
-      location: "México DF, México",
-      comment: "Reservé en último minuto y me dieron un trato excepcional. El paquete a Nueva York superó todas mis expectativas.",
-      rating: 4
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f8f9fa;
     }
-  ];
 
-  const SearchSection = () => (
-    <div className="bg-white rounded-2xl shadow-xl p-8 -mt-20 relative z-10 max-w-6xl mx-auto">
-      <div className="flex flex-wrap gap-4 mb-6">
-        <button
-          onClick={() => setActiveTab('flights')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
-            activeTab === 'flights' 
-              ? 'bg-indigo-600 text-white shadow-md' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          <Plane className="w-5 h-5" />
-          Vuelos
-        </button>
-        <button
-          onClick={() => setActiveTab('hotels')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
-            activeTab === 'hotels' 
-              ? 'bg-indigo-600 text-white shadow-md' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          <Hotel className="w-5 h-5" />
-          Hoteles
-        </button>
-        <button
-          onClick={() => setActiveTab('packages')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
-            activeTab === 'packages' 
-              ? 'bg-indigo-600 text-white shadow-md' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          <PlaneTakeoff className="w-5 h-5" />
-          Paquetes
-        </button>
-      </div>
+    /* Cabecera */
+    header {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1488085061387-422e29b40080?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 120px 20px 80px;
+    }
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {activeTab === 'flights' && (
-          <>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Origen</label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="text" 
-                  placeholder="Ciudad de origen" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Destino</label>
-              <div className="relative">
-                <PlaneLanding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="text" 
-                  placeholder="Destino" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  value={searchQuery.destination}
-                  onChange={(e) => setSearchQuery({...searchQuery, destination: e.target.value})}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Ida</label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="date" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  value={searchQuery.checkIn}
-                  onChange={(e) => setSearchQuery({...searchQuery, checkIn: e.target.value})}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Regreso</label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="date" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  value={searchQuery.checkOut}
-                  onChange={(e) => setSearchQuery({...searchQuery, checkOut: e.target.value})}
-                />
-              </div>
-            </div>
-          </>
-        )}
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+    }
 
-        {activeTab === 'hotels' && (
-          <>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Destino</label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="text" 
-                  placeholder="Ciudad o hotel" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  value={searchQuery.destination}
-                  onChange={(e) => setSearchQuery({...searchQuery, destination: e.target.value})}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Check-in</label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="date" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  value={searchQuery.checkIn}
-                  onChange={(e) => setSearchQuery({...searchQuery, checkIn: e.target.value})}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Check-out</label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="date" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  value={searchQuery.checkOut}
-                  onChange={(e) => setSearchQuery({...searchQuery, checkOut: e.target.value})}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Habitaciones</label>
-              <div className="relative">
-                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <select 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none bg-white"
-                  value={searchQuery.passengers}
-                  onChange={(e) => setSearchQuery({...searchQuery, passengers: e.target.value})}
-                >
-                  <option value="1">1 habitación, 2 personas</option>
-                  <option value="2">2 habitaciones, 4 personas</option>
-                  <option value="3">3 habitaciones, 6 personas</option>
-                </select>
-              </div>
-            </div>
-          </>
-        )}
+    header p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-        {activeTab === 'packages' && (
-          <>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Destino</label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="text" 
-                  placeholder="Destino" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  value={searchQuery.destination}
-                  onChange={(e) => setSearchQuery({...searchQuery, destination: e.target.value})}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Fecha de inicio</label>
-              <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input 
-                  type="date" 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                  value={searchQuery.checkIn}
-                  onChange={(e) => setSearchQuery({...searchQuery, checkIn: e.target.value})}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Duración</label>
-              <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                <option>7 días</option>
-                <option>10 días</option>
-                <option>14 días</option>
-                <option>21 días</option>
-              </select>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Personas</label>
-              <div className="relative">
-                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <select 
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent appearance-none bg-white"
-                  value={searchQuery.passengers}
-                  onChange={(e) => setSearchQuery({...searchQuery, passengers: e.target.value})}
-                >
-                  <option value="1">1 persona</option>
-                  <option value="2">2 personas</option>
-                  <option value="3">3 personas</option>
-                  <option value="4">4 personas</option>
-                </select>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+    /* Navegación */
+    nav {
+      background-color: #003580;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
-      <button className="w-full mt-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-lg font-semibold text-lg hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-3 shadow-lg">
-        <Search className="w-6 h-6" />
-        Buscar mejores ofertas
-      </button>
+    nav ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    nav ul li a {
+      color: white;
+      padding: 16px 24px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+      display: block;
+    }
+
+    nav ul li a:hover {
+      background-color: #001f4d;
+    }
+
+    /* Sección de búsqueda */
+    .search-section {
+      padding: 60px 20px;
+      background-color: #e3f2fd;
+      text-align: center;
+    }
+
+    .search-section h2 {
+      font-size: 2.2rem;
+      color: #003580;
+      margin-bottom: 30px;
+    }
+
+    .search-form {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .search-form input, .search-form select {
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 200px;
+      font-size: 1rem;
+    }
+
+    .search-form button {
+      background-color: #ff6b00;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .search-form button:hover {
+      background-color: #e55a00;
+    }
+
+    /* Por qué elegirnos */
+    .features {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .features h2 {
+      font-size: 2.5rem;
+      color: #003580;
+      margin-bottom: 40px;
+    }
+
+    .feature-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 250px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .feature-card i {
+      font-size: 3rem;
+      color: #003580;
+      margin-bottom: 15px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #003580;
+    }
+
+    /* Destinos */
+    .destinos {
+      padding: 60px 20px;
+      background-color: #f1f5f9;
+      text-align: center;
+    }
+
+    .destinos h2 {
+      font-size: 2.5rem;
+      color: #003580;
+      margin-bottom: 40px;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 300px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      color: #003580;
+    }
+
+    .card p {
+      color: #666;
+      margin: 8px 0;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #ff6b00;
+      font-size: 1.1rem;
+    }
+
+    /* Paquetes destacados */
+    .paquetes {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .paquetes h2 {
+      font-size: 2.5rem;
+      color: #003580;
+      margin-bottom: 40px;
+    }
+
+    .paquete-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 350px;
+      margin: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .paquete-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .paquete-info {
+      padding: 20px;
+    }
+
+    .paquete-info h3 {
+      color: #003580;
+      font-size: 1.4rem;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .new-price {
+      color: #ff6b00;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    /* Testimonios */
+    .testimonios {
+      padding: 60px 20px;
+      background-color: #003580;
+      color: white;
+      text-align: center;
+    }
+
+    .testimonios h2 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+    }
+
+    .testimonial {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+    }
+
+    .testimonial p {
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    .testimonial .name {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .testimonial .location {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Suscripción */
+    .newsletter {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      font-size: 2.2rem;
+      color: #003580;
+      margin-bottom: 20px;
+    }
+
+    .newsletter p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      color: #666;
+    }
+
+    .newsletter form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+    }
+
+    .newsletter input {
+      flex: 1;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px 0 0 8px;
+    }
+
+    .newsletter button {
+      background: #003580;
+      color: white;
+      border: none;
+      padding: 0 20px;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    footer {
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #00aaff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cabecera -->
+  <header>
+    <h1>Descubre el Mundo</h1>
+    <p>Las mejores ofertas en vuelos, hoteles y paquetes vacacionales. Tu próxima aventura comienza aquí.</p>
+  </header>
+
+  <!-- Navegación -->
+  <nav>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#destinos">Destinos</a></li>
+      <li><a href="#paquetes">Paquetes</a></li>
+      <li><a href="#testimonios">Testimonios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Búsqueda -->
+  <section class="search-section">
+    <h2>Encuentra tu próximo viaje</h2>
+    <div class="search-form">
+      <input type="text" placeholder="Destino" />
+      <input type="date" />
+      <input type="date" />
+      <select>
+        <option>1 persona</option>
+        <option>2 personas</option>
+        <option>3+ personas</option>
+      </select>
+      <button><i class="fas fa-search"></i> Buscar</button>
     </div>
-  );
+  </section>
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Plane className="w-8 h-8 text-indigo-600" />
-              <span className="ml-2 text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                ViajaFácil
-              </span>
-            </div>
-            
-            <nav className="hidden md:flex space-x-8">
-              <a href="#destinations" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Destinos</a>
-              <a href="#packages" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Paquetes</a>
-              <a href="#testimonials" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Opiniones</a>
-              <a href="#" className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Contacto</a>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <button className="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Iniciar sesión</button>
-              <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium">
-                Registrarse
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-white">
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('https://placehold.co/1920x1080/1e293b/ffffff?text=Viajes+Internacionales')"
-          }}
-        ></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Descubre el <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">mundo</span> con nosotros
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed">
-              Las mejores ofertas en vuelos, hoteles y paquetes vacacionales. 
-              Tu próxima aventura comienza aquí.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-8 py-4 rounded-lg font-semibold text-lg hover:from-yellow-300 hover:to-orange-400 transform hover:scale-105 transition-all duration-200 shadow-xl">
-                Explorar ofertas
-              </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-gray-900 transition-all duration-200">
-                Ver destinos
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Search Section */}
-      <section className="py-16 px-4">
-        <SearchSection />
-      </section>
-
-      {/* Features */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Por qué elegirnos</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Ofrecemos la mejor experiencia de viaje con servicios premium y atención personalizada
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { icon: Shield, title: "Seguridad Garantizada", desc: "Reservas seguras con protección de datos y pagos encriptados" },
-              { icon: Wallet, title: "Mejor Precio", desc: "Garantizamos los mejores precios y reembolsos si encuentras más barato" },
-              { icon: Clock, title: "Soporte 24/7", desc: "Atención al cliente disponible las 24 horas, los 7 días de la semana" },
-              { icon: MessageCircle, title: "Asistencia Personal", desc: "Asesores de viaje dedicados para ayudarte en cada paso" }
-            ].map((feature, index) => (
-              <div key={index} className="text-center p-6 rounded-xl hover:shadow-lg transition-shadow duration-300">
-                <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="w-8 h-8 text-indigo-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Popular Destinations */}
-      <section id="destinations" className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Destinos Populares</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Descubre los lugares más deseados por nuestros viajeros
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {popularDestinations.map((destination, index) => (
-              <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="relative">
-                  <img 
-                    src={destination.image} 
-                    alt={destination.name}
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-                    {destination.price}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{destination.name}</h3>
-                  <p className="text-gray-600 mb-4">{destination.country}</p>
-                  <button className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition-colors font-semibold">
-                    Ver ofertas
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Packages */}
-      <section id="packages" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Paquetes Destacados</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Ofertas especiales que combinan vuelos, hoteles y experiencias únicas
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {featuredPackages.map((pkg, index) => (
-              <div key={index} className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
-                <img 
-                  src={pkg.image} 
-                  alt={pkg.title}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-6">
-                  <div className="flex items-center mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`w-5 h-5 ${i < Math.floor(pkg.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
-                      />
-                    ))}
-                    <span className="ml-2 text-sm text-gray-600">({pkg.rating})</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{pkg.title}</h3>
-                  <p className="text-gray-600 mb-4">{pkg.duration}</p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-2xl font-bold text-indigo-600">{pkg.price}</span>
-                      <span className="text-lg text-gray-500 line-through ml-2">{pkg.originalPrice}</span>
-                    </div>
-                    <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-colors font-semibold">
-                      Reservar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="testimonials" className="py-16 bg-gradient-to-br from-indigo-900 to-purple-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Lo que dicen nuestros clientes</h2>
-            <p className="text-xl text-indigo-200 max-w-3xl mx-auto">
-              Miles de viajeros satisfechos han confiado en nosotros para sus aventuras
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 hover:bg-opacity-20 transition-all duration-300">
-                <div className="flex mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className={`w-5 h-5 ${i < testimonial.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
-                    />
-                  ))}
-                </div>
-                <p className="text-lg mb-6 italic">"{testimonial.comment}"</p>
-                <div>
-                  <p className="font-semibold text-lg">{testimonial.name}</p>
-                  <p className="text-indigo-200">{testimonial.location}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Recibe nuestras mejores ofertas</h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Suscríbete a nuestro boletín y obtén descuentos exclusivos y ofertas anticipadas
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-            <input 
-              type="email" 
-              placeholder="Tu correo electrónico" 
-              className="flex-1 px-6 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg"
-            />
-            <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200">
-              Suscribirse
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center mb-4">
-                <Plane className="w-8 h-8 text-indigo-400" />
-                <span className="ml-2 text-2xl font-bold">ViajaFácil</span>
-              </div>
-              <p className="text-gray-400 mb-4">
-                Tu agencia de viajes online de confianza. Ofrecemos las mejores experiencias de viaje a precios increíbles.
-              </p>
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Plane className="w-6 h-6" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Plane className="w-6 h-6" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Plane className="w-6 h-6" />
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Destinos</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Europa</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">América</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Asia</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Oceanía</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">África</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Servicios</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Vuelos</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Hoteles</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Paquetes</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Alquiler de autos</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Cruceros</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Contacto</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li className="flex items-center">
-                  <MapPin className="w-5 h-5 mr-2" />
-                  Madrid, España
-                </li>
-                <li className="flex items-center">
-                  <Plane className="w-5 h-5 mr-2" />
-                  +34 912 345 678
-                </li>
-                <li className="flex items-center">
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  info@viajafacil.com
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 ViajaFácil. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+  <!-- Por qué elegirnos -->
+  <section class="features">
+    <h2>Por qué Elegirnos</h2>
+    <div class="feature-cards">
+      <div class="feature-card">
+        <i class="fas fa-plane"></i>
+        <h3>Vuelos Económicos</h3>
+        <p>Las mejores tarifas a destinos populares del mundo.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-hotel"></i>
+        <h3>Hoteles Premium</h3>
+        <p>Estadías en hoteles de 4 y 5 estrellas con descuentos.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-shield-alt"></i>
+        <h3>Seguridad Garantizada</h3>
+        <p>Reservas seguras y asistencia 24/7 durante tu viaje.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-wallet"></i>
+        <h3>Precios Justos</h3>
+        <p>Sin cargos ocultos. Precio final desde el inicio.</p>
+      </div>
     </div>
-  );
-};
+  </section>
 
-export default App;
+  <!-- Destinos Populares -->
+  <section id="destinos" class="destinos">
+    <h2>Destinos Populares</h2>
+    <div class="cards">
+      <div class="card">
+        <img src="https://placehold.co/400x300/4f46e5/ffffff?text=París" alt="París">
+        <div class="card-content">
+          <h3>París</h3>
+          <p>Francia</p>
+          <p class="price">Desde $899</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://placehold.co/400x300/dc2626/ffffff?text=Roma" alt="Roma">
+        <div class="card-content">
+          <h3>Roma</h3>
+          <p>Italia</p>
+          <p class="price">Desde $749</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://placehold.co/400x300/059669/ffffff?text=Nueva+York" alt="Nueva York">
+        <div class="card-content">
+          <h3>Nueva York</h3>
+          <p>EE.UU.</p>
+          <p class="price">Desde $699</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paquetes Destacados -->
+  <section id="paquetes" class="paquetes">
+    <h2>Paquetes Destacados</h2>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+      <div class="paquete-card">
+        <img src="https://placehold.co/600x400/4f46e5/ffffff?text=París+Romántico" alt="París Romántico">
+        <div class="paquete-info">
+          <h3>Escapada Romántica a París</h3>
+          <p>7 días / 6 noches</p>
+          <p><span class="old-price">$1,599</span> <span class="new-price">$1,299</span></p>
+        </div>
+      </div>
+      <div class="paquete-card">
+        <img src="https://placehold.co/600x400/0891b2/ffffff?text=Maldivas" alt="Maldivas">
+        <div class="paquete-info">
+          <h3>Aventura en las Islas Maldivas</h3>
+          <p>10 días / 9 noches</p>
+          <p><span class="old-price">$2,999</span> <span class="new-price">$2,499</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios -->
+  <section id="testimonios" class="testimonios">
+    <h2>Lo que dicen nuestros clientes</h2>
+    <div class="testimonial">
+      <p>"La mejor experiencia de viaje de mi vida. Todo fue perfecto desde el primer momento hasta el regreso. Altamente recomendado!"</p>
+      <div class="name">María González</div>
+      <div class="location">Madrid, España</div>
+    </div>
+    <div class="testimonial">
+      <p>"Increíble atención al cliente y precios muy competitivos. Nuestra familia disfrutó cada momento del viaje a Italia."</p>
+      <div class="name">Carlos Rodríguez</div>
+      <div class="location">Buenos Aires, Argentina</div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section id="contacto" class="newsletter">
+    <h2>Recibe nuestras mejores ofertas</h2>
+    <p>Suscríbete a nuestro boletín y obtén descuentos exclusivos y ofertas anticipadas.</p>
+    <form>
+      <input type="email" placeholder="Tu correo electrónico" required />
+      <button type="submit">Suscribirme</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 ViajaMundo - Todos los derechos reservados</p>
+    <p>info@viajamundo.com | <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+  </footer>
+
+  <script>
+    // Smooth scrolling para enlaces
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        window.scrollTo({
+          top: target.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
