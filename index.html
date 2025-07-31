@@ -229,6 +229,50 @@
     footer a {
       color: #00aaff;
     }
+
+    /* Estilos para resultados */
+    .results-container {
+      padding: 60px 20px;
+      background: #f0f4f8;
+      min-height: 100vh;
+    }
+    .result-item, .hotel-item {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .result-item div, .hotel-item div {
+      flex: 1;
+    }
+    .result-item button, .hotel-item button {
+      background: #003580;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .result-item small, .hotel-item small {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .back-button {
+      display: block;
+      margin: 40px auto;
+      background: #003580;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      width: 200px;
+    }
   </style>
 </head>
 <body>
@@ -292,7 +336,7 @@
     </div>
   </section>
 
-  <!-- Destinos -->
+  <!-- Destinos Populares -->
   <section id="destinos" class="destinos">
     <h2>Destinos Populares</h2>
     <div class="cards">
@@ -323,7 +367,7 @@
     </div>
   </section>
 
-  <!-- Paquetes -->
+  <!-- Paquetes Destacados -->
   <section id="paquetes" class="paquetes">
     <h2>Paquetes Destacados</h2>
     <div style="display: flex; flex-wrap: wrap; justify-content: center;">
@@ -361,7 +405,7 @@
     </div>
   </section>
 
-  <!-- Contacto con Formspree -->
+  <!-- Contacto -->
   <section id="contacto" class="newsletter">
     <h2>Recibe nuestras mejores ofertas</h2>
     <p>Suscríbete a nuestro boletín y obtén descuentos exclusivos y ofertas anticipadas.</p>
@@ -377,22 +421,128 @@
     <p>info@descubrelmundo.com | <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Scripts: Búsqueda de vuelos + hoteles -->
   <script>
+    // Datos simulados de vuelos
+    const vuelosSimulados = [
+      { origen: "Madrid", destino: "París", salida: "08:30", llegada: "10:15", duracion: "1h 45m", precio: "$199", aerolinea: "Air Europa", tipo: "directo" },
+      { origen: "Madrid", destino: "París", salida: "14:20", llegada: "16:05", duracion: "1h 45m", precio: "$249", aerolinea: "Iberia", tipo: "directo" },
+      { origen: "Madrid", destino: "París", salida: "06:15", llegada: "09:30", duracion: "3h 15m", precio: "$149", aerolinea: "Vueling", tipo: "escala" },
+      { origen: "Madrid", destino: "Roma", salida: "09:45", llegada: "12:10", duracion: "2h 25m", precio: "$179", aerolinea: "Ryanair", tipo: "directo" },
+      { origen: "Madrid", destino: "Roma", salida: "18:00", llegada: "20:25", duracion: "2h 25m", precio: "$219", aerolinea: "Alitalia", tipo: "directo" },
+      { origen: "Madrid", destino: "Nueva York", salida: "10:00", llegada: "13:30", duracion: "8h 30m", precio: "$699", aerolinea: "American Airlines", tipo: "directo" }
+    ];
+
+    // Datos simulados de hoteles
+    const hotelesSimulados = [
+      { nombre: "Hotel Eiffel View", destino: "París", estrellas: 5, precio: "$249/noche", tipo: "Lujo", imagen: "https://placehold.co/300x200/4f46e5/ffffff?text=Hotel+París" },
+      { nombre: "Hotel Coliseo", destino: "Roma", estrellas: 4, precio: "$189/noche", tipo: "Premium", imagen: "https://placehold.co/300x200/dc2626/ffffff?text=Hotel+Roma" },
+      { nombre: "Central Park Inn", destino: "Nueva York", estrellas: 4, precio: "$219/noche", tipo: "Negocios", imagen: "https://placehold.co/300x200/059669/ffffff?text=Hotel+NYC" },
+      { nombre: "Tokyo Sky Hotel", destino: "Tokio", estrellas: 5, precio: "$279/noche", tipo: "Lujo", imagen: "https://placehold.co/300x200/7c3aed/ffffff?text=Hotel+Tokio" }
+    ];
+
     function buscar(event) {
       event.preventDefault();
-      const destino = document.getElementById('dest').value;
+
+      const destino = document.getElementById('dest').value.trim().toLowerCase();
       const checkIn = document.getElementById('checkIn').value;
       const checkOut = document.getElementById('checkOut').value;
-      alert(`Buscando vuelos a ${destino} desde ${checkIn} hasta ${checkOut}...`);
+      const passengers = document.getElementById('passengers').value;
+
+      if (!destino || !checkIn || !checkOut) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+
+      // Filtrar vuelos
+      const vuelos = vuelosSimulados.filter(v => 
+        v.destino.toLowerCase().includes(destino)
+      );
+
+      // Filtrar hoteles
+      const hoteles = hotelesSimulados.filter(h => 
+        h.destino.toLowerCase().includes(destino)
+      );
+
+      // Mostrar resultados
+      mostrarResultados(destino, checkIn, checkOut, passengers, vuelos, hoteles);
+    }
+
+    function mostrarResultados(destino, ida, vuelta, pasajeros, vuelos, hoteles) {
+      const resultadosHTML = `
+        <div class="results-container">
+          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <h2 style="text-align: center; color: #003580; margin-bottom: 20px;">
+              Resultados para ${destino.charAt(0).toUpperCase() + destino.slice(1)}
+            </h2>
+            <p style="text-align: center; color: #666; margin-bottom: 40px;">
+              Salida: ${ida} | Regreso: ${vuelta} | ${pasajeros} pasajero(s)
+            </p>
+
+            <h3 style="color: #003580; margin: 20px 0 10px;">✈️ Vuelos Disponibles</h3>
+            <div id="vuelos-lista">
+              ${vuelos.length > 0 
+                ? vuelos.map(v => `
+                  <div class="result-item">
+                    <div>
+                      <strong>${v.origen} → ${v.destino}</strong><br>
+                      <small>${v.salida} - ${v.llegada} · ${v.duracion} · ${v.aerolinea}</small><br>
+                      <span style="color: #003580; font-size: 0.9rem;">${v.tipo === 'directo' ? '✈️ Directo' : '🔄 Con escala'}</span>
+                    </div>
+                    <div style="text-align: right;">
+                      <div style="font-weight: bold; color: #ff6b00; font-size: 1.2rem;">${v.precio}</div>
+                      <button onclick="reservar('vuelo', '${v.origen}', '${v.destino}', '${v.precio}')">Reservar</button>
+                    </div>
+                  </div>
+                `).join('')
+                : `<p style="color: #999; text-align: center;">No se encontraron vuelos para ${destino}</p>`
+              }
+            </div>
+
+            <h3 style="color: #003580; margin: 40px 0 10px;">🏨 Hoteles en ${destino.charAt(0).toUpperCase() + destino.slice(1)}</h3>
+            <div id="hoteles-lista">
+              ${hoteles.length > 0 
+                ? hoteles.map(h => `
+                  <div class="hotel-item">
+                    <div>
+                      <strong>${h.nombre}</strong> <span>${'★'.repeat(h.estrellas)}</span><br>
+                      <small>${h.tipo} · ${h.precio}</small>
+                    </div>
+                    <div style="text-align: right;">
+                      <div style="font-weight: bold; color: #ff6b00; font-size: 1.2rem;">Reservar desde ${h.precio}</div>
+                      <button onclick="reservar('hotel', '${h.nombre}', '${h.destino}', '${h.precio}')">Reservar</button>
+                    </div>
+                  </div>
+                `).join('')
+                : `<p style="color: #999; text-align: center;">No se encontraron hoteles para ${destino}</p>`
+              }
+            </div>
+
+            <button onclick="volver()" class="back-button">← Volver a la búsqueda</button>
+          </div>
+        </div>
+      `;
+
+      document.body.innerHTML = resultadosHTML;
+    }
+
+    function reservar(tipo, origen_o_nombre, destino_o_destino, precio) {
+      const tipoTexto = tipo === 'vuelo' ? 'vuelo' : 'estadía';
+      alert(¡Reserva confirmada para tu ${tipoTexto}!\nDetalles: ${origen_o_nombre} → ${destino_o_destino}\nPrecio: ${precio}\nPronto recibirás un correo con la confirmación.);
+    }
+
+    function volver() {
+      location.reload();
     }
 
     // Smooth scrolling
-    document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(e.target.getAttribute('href'));
-        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const target = document.querySelector(e.target.getAttribute('href'));
+          window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+        });
       });
     });
   </script>
