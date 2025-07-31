@@ -3,25 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ViajaMundo | Agencia de Viajes Online</title>
+  <title>Descubre el Mundo | Agencia de Viajes</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
       line-height: 1.6;
       color: #333;
       background-color: #f8f9fa;
     }
-
-    /* Cabecera */
     header {
       background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1488085061387-422e29b40080?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
       background-size: cover;
@@ -30,19 +22,15 @@
       text-align: center;
       padding: 120px 20px 80px;
     }
-
     header h1 {
       font-size: 3.5rem;
       margin-bottom: 15px;
     }
-
     header p {
       font-size: 1.3rem;
       max-width: 700px;
       margin: 0 auto;
     }
-
-    /* Navegación */
     nav {
       background-color: #003580;
       position: sticky;
@@ -50,14 +38,12 @@
       z-index: 100;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-
     nav ul {
       display: flex;
       list-style: none;
       justify-content: center;
       gap: 2px;
     }
-
     nav ul li a {
       color: white;
       padding: 16px 24px;
@@ -66,24 +52,19 @@
       transition: background 0.3s;
       display: block;
     }
-
     nav ul li a:hover {
       background-color: #001f4d;
     }
-
-    /* Sección de búsqueda */
     .search-section {
       padding: 60px 20px;
       background-color: #e3f2fd;
       text-align: center;
     }
-
     .search-section h2 {
       font-size: 2.2rem;
       color: #003580;
       margin-bottom: 30px;
     }
-
     .search-form {
       max-width: 800px;
       margin: 0 auto;
@@ -91,8 +72,11 @@
       flex-wrap: wrap;
       gap: 15px;
       justify-content: center;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
-
     .search-form input, .search-form select {
       padding: 12px 15px;
       border: 1px solid #ccc;
@@ -100,7 +84,6 @@
       width: 200px;
       font-size: 1rem;
     }
-
     .search-form button {
       background-color: #ff6b00;
       color: white;
@@ -109,25 +92,19 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s;
     }
-
     .search-form button:hover {
       background-color: #e55a00;
     }
-
-    /* Por qué elegirnos */
-    .features {
+    .features, .destinos, .paquetes, .testimonios, .newsletter {
       padding: 60px 20px;
       text-align: center;
     }
-
-    .features h2 {
+    .features h2, .destinos h2, .paquetes h2, .testimonios h2, .newsletter h2 {
       font-size: 2.5rem;
       color: #003580;
       margin-bottom: 40px;
     }
-
     .feature-cards {
       display: flex;
       flex-wrap: wrap;
@@ -136,7 +113,6 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-
     .feature-card {
       background: white;
       padding: 30px;
@@ -144,90 +120,44 @@
       width: 250px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
-
     .feature-card i {
       font-size: 3rem;
       color: #003580;
-      margin-bottom: 15px;
     }
-
     .feature-card h3 {
       font-size: 1.4rem;
-      margin-bottom: 10px;
+      margin: 10px 0;
       color: #003580;
     }
-
-    /* Destinos */
-    .destinos {
-      padding: 60px 20px;
-      background-color: #f1f5f9;
-      text-align: center;
-    }
-
-    .destinos h2 {
-      font-size: 2.5rem;
-      color: #003580;
-      margin-bottom: 40px;
-    }
-
     .cards {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 25px;
     }
-
     .card {
       background: white;
       border-radius: 12px;
       overflow: hidden;
       width: 300px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
     }
-
-    .card:hover {
-      transform: translateY(-10px);
-    }
-
     .card img {
       width: 100%;
       height: 180px;
       object-fit: cover;
     }
-
     .card-content {
       padding: 20px;
     }
-
     .card h3 {
       font-size: 1.5rem;
       color: #003580;
     }
-
-    .card p {
-      color: #666;
-      margin: 8px 0;
-    }
-
     .price {
-      font-weight: bold;
       color: #ff6b00;
-      font-size: 1.1rem;
+      font-weight: bold;
     }
-
-    /* Paquetes destacados */
-    .paquetes {
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .paquetes h2 {
-      font-size: 2.5rem;
-      color: #003580;
-      margin-bottom: 40px;
-    }
-
     .paquete-card {
       background: white;
       border-radius: 12px;
@@ -236,46 +166,27 @@
       margin: 10px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
-
     .paquete-card img {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
-
-    .paquete-info {
-      padding: 20px;
-    }
-
     .paquete-info h3 {
       color: #003580;
-      font-size: 1.4rem;
     }
-
     .old-price {
       text-decoration: line-through;
       color: #999;
     }
-
     .new-price {
       color: #ff6b00;
       font-weight: bold;
       font-size: 1.3rem;
     }
-
-    /* Testimonios */
     .testimonios {
-      padding: 60px 20px;
       background-color: #003580;
       color: white;
-      text-align: center;
     }
-
-    .testimonios h2 {
-      font-size: 2.5rem;
-      margin-bottom: 40px;
-    }
-
     .testimonial {
       max-width: 600px;
       margin: 20px auto;
@@ -283,53 +194,24 @@
       background: rgba(255,255,255,0.1);
       border-radius: 10px;
     }
-
     .testimonial p {
       font-style: italic;
-      font-size: 1.1rem;
     }
-
     .testimonial .name {
       font-weight: bold;
       margin-top: 10px;
     }
-
-    .testimonial .location {
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-
-    /* Suscripción */
-    .newsletter {
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .newsletter h2 {
-      font-size: 2.2rem;
-      color: #003580;
-      margin-bottom: 20px;
-    }
-
-    .newsletter p {
-      max-width: 600px;
-      margin: 0 auto 30px;
-      color: #666;
-    }
-
     .newsletter form {
       max-width: 500px;
       margin: 0 auto;
       display: flex;
     }
-
     .newsletter input {
       flex: 1;
       padding: 15px;
       border: 1px solid #ccc;
       border-radius: 8px 0 0 8px;
     }
-
     .newsletter button {
       background: #003580;
       color: white;
@@ -338,16 +220,12 @@
       border-radius: 0 8px 8px 0;
       cursor: pointer;
     }
-
-    /* Footer */
     footer {
       background: #111;
       color: #ccc;
       text-align: center;
       padding: 30px 20px;
-      font-size: 0.9rem;
     }
-
     footer a {
       color: #00aaff;
     }
@@ -355,13 +233,11 @@
 </head>
 <body>
 
-  <!-- Cabecera -->
   <header>
     <h1>Descubre el Mundo</h1>
     <p>Las mejores ofertas en vuelos, hoteles y paquetes vacacionales. Tu próxima aventura comienza aquí.</p>
   </header>
 
-  <!-- Navegación -->
   <nav>
     <ul>
       <li><a href="#inicio">Inicio</a></li>
@@ -372,20 +248,21 @@
     </ul>
   </nav>
 
-  <!-- Búsqueda -->
+  <!-- Búsqueda Funcional -->
   <section class="search-section">
     <h2>Encuentra tu próximo viaje</h2>
-    <div class="search-form">
-      <input type="text" placeholder="Destino" />
-      <input type="date" />
-      <input type="date" />
-      <select>
-        <option>1 persona</option>
-        <option>2 personas</option>
-        <option>3+ personas</option>
+    <form class="search-form" onsubmit="buscar(event)">
+      <input type="text" id="dest" placeholder="Destino" required />
+      <input type="date" id="checkIn" required />
+      <input type="date" id="checkOut" required />
+      <select id="passengers">
+        <option value="1">1 persona</option>
+        <option value="2">2 personas</option>
+        <option value="3">3 personas</option>
+        <option value="4">4+ personas</option>
       </select>
-      <button><i class="fas fa-search"></i> Buscar</button>
-    </div>
+      <button type="submit"><i class="fas fa-search"></i> Buscar</button>
+    </form>
   </section>
 
   <!-- Por qué elegirnos -->
@@ -415,7 +292,7 @@
     </div>
   </section>
 
-  <!-- Destinos Populares -->
+  <!-- Destinos -->
   <section id="destinos" class="destinos">
     <h2>Destinos Populares</h2>
     <div class="cards">
@@ -446,12 +323,12 @@
     </div>
   </section>
 
-  <!-- Paquetes Destacados -->
+  <!-- Paquetes -->
   <section id="paquetes" class="paquetes">
     <h2>Paquetes Destacados</h2>
     <div style="display: flex; flex-wrap: wrap; justify-content: center;">
       <div class="paquete-card">
-        <img src="https://placehold.co/600x400/4f46e5/ffffff?text=París+Romántico" alt="París Romántico">
+        <img src="https://placehold.co/600x400/4f46e5/ffffff?text=París+Romántico" alt="París">
         <div class="paquete-info">
           <h3>Escapada Romántica a París</h3>
           <p>7 días / 6 noches</p>
@@ -484,32 +361,38 @@
     </div>
   </section>
 
-  <!-- Newsletter -->
+  <!-- Contacto con Formspree -->
   <section id="contacto" class="newsletter">
     <h2>Recibe nuestras mejores ofertas</h2>
     <p>Suscríbete a nuestro boletín y obtén descuentos exclusivos y ofertas anticipadas.</p>
-    <form>
-      <input type="email" placeholder="Tu correo electrónico" required />
+    <form action="https://formspree.io/f/xvoodqye" method="POST">
+      <input type="email" name="email" placeholder="Tu correo electrónico" required />
       <button type="submit">Suscribirme</button>
     </form>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 ViajaMundo - Todos los derechos reservados</p>
-    <p>info@viajamundo.com | <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+    <p>&copy; 2025 Descubre el Mundo - Todos los derechos reservados</p>
+    <p>info@descubrelmundo.com | <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
   </footer>
 
+  <!-- Scripts -->
   <script>
-    // Smooth scrolling para enlaces
+    function buscar(event) {
+      event.preventDefault();
+      const destino = document.getElementById('dest').value;
+      const checkIn = document.getElementById('checkIn').value;
+      const checkOut = document.getElementById('checkOut').value;
+      alert(`Buscando vuelos a ${destino} desde ${checkIn} hasta ${checkOut}...`);
+    }
+
+    // Smooth scrolling
     document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', function(e) {
+      link.addEventListener('click', e => {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        window.scrollTo({
-          top: target.offsetTop - 80,
-          behavior: 'smooth'
-        });
+        const target = document.querySelector(e.target.getAttribute('href'));
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
       });
     });
   </script>
